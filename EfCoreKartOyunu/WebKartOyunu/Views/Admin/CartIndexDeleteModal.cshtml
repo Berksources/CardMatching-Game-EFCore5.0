@@ -1,0 +1,38 @@
+﻿@model CartViewModel;
+
+@foreach (var cart in Model.CartAllDataForDeleteModal)
+{
+    foreach (var file in cart.FirstFileRepos)
+    {
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kart Silme</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="mt-0" asp-action="DeleteCart" enctype="multipart/form-data" method="post">
+                    <input asp-for="@cart.CartID" name="CartID" type="hidden" value="@cart.CartID">
+                    <input asp-for="@file.FilePhotoIsDefault" name="FilePhotoIsDefault" type="hidden" value="@file.FilePhotoIsDefault">
+                    <div class="modal-body">
+                        <p>
+                            <b>@cart.CartName</b>
+                            adlı kartı silmek istediğinize emin misiniz ?
+                        </p>
+                    </div>
+                    <div class="modal-footer md-button">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Vazgeç</button>
+                        <button type="submit" value="submit" name="DeleteCart" class="btn btn-primary">Sil</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+}

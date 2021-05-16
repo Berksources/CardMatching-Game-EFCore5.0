@@ -1,0 +1,50 @@
+﻿@model CategoryViewModel;
+
+@foreach (var category in Model.CategoriesForUpdateModal)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Kategori Güncelleme</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="feather feather-x">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="mt-0" asp-action="UpdateCategory" enctype="multipart/form-data" method="post">
+                <input asp-for="@category.CategoryID"type="hidden" value="@category.CategoryID">
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <label asp-for="@category.CategoryIsActive">Aktif mi ?</label>
+                        <select asp-for="@category.CategoryIsActive" class="form-control" data-width="100%" required>
+                            <option disabled selected value="" style="display:none;">Seçiniz</option>
+                            @if (category.CategoryIsActive == true)
+                            {
+                                <option selected="selected" value="@category.CategoryIsActive">Aktif</option>
+                                <option value="false">Pasif</option>
+                            }
+                            else
+                            {
+                                <option selected="selected" value="@category.CategoryIsActive">Pasif</option>
+                                <option value="true">Aktif</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label asp-for="@category.CategoryName">Kategori Adı</label>
+                        <input asp-for="@category.CategoryName" type="text" class="form-control" placeholder="Adı" required>
+                        <span asp-validation-for="@category.CategoryName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <button type="submit" name="UpdateCategory" class="btn btn-primary mt-2 mb-2 btn-block">Kategori Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}

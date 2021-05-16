@@ -1,0 +1,55 @@
+﻿@model CartViewModel;
+
+@foreach (var cart in Model.CartAllDataForUpdateModal)
+{
+    foreach (var file in cart.FirstFileRepos)
+    {
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kart Güncelleme </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="mt-0" asp-action="UpdateCart" enctype="multipart/form-data" method="post">
+                    <input asp-for="@cart.CartID" type="hidden" value="@cart.CartID">
+                    <input asp-for="@file.FileID" name="fileID" type="hidden" value="@file.FileID">
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label asp-for="@cart.CategoryID">Kartın Kategorisi</label>
+                            <select asp-for="@cart.CategoryID" class="form-control" data-width="100%" required>
+                                <option disabled selected value="" style="display:none;">Seçiniz</option>
+                                @foreach (var list in Model.CategoryForDropdownList)
+                                {
+                                    <option value="@list.CategoryID">@list.CategoryName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="@cart.CartName">Kategori Adı</label>
+                            <input asp-for="@cart.CartName" type="text" class="form-control" placeholder="Kategori Adı" required>
+                            <span asp-validation-for="@cart.CartName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <div class="custom-file mb-4">
+                                <input asp-for="FileRepo" name="files" type="file" class="custom-file-input">
+                                <label asp-for="FileRepo" class="custom-file-label">Dosya Seçiniz..</label>
+                            </div>
+                        </div>
+                        <button type="submit" name="UpdateCart" class="btn btn-primary mt-2 mb-2 btn-block">Kart Ekle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+}

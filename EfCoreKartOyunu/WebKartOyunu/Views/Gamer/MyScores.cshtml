@@ -1,0 +1,34 @@
+﻿@model ScoreTableViewModel
+
+@{
+    ViewData["Title"] = "MyScores";
+    Layout = "~/Views/Shared/_LayoutGamer.cshtml";
+}
+
+<h1>Skorlarım</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+               Skorum
+            </th>
+            <th>
+                Oynadığım Tarih
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ScoreTableOnly) { 
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoreData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

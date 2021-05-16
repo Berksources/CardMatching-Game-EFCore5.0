@@ -1,0 +1,23 @@
+﻿@model ScoreTableViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutGamer.cshtml";
+}
+<h1>Anasayfa</h1>
+<li>
+    <ul>
+        <li>
+            <a href="@Url.Action("MyScores","Gamer")">Skorlarım</a>
+        </li>
+        <li>
+            <a href="@Url.Action("GamerIndex","Gamer")">Bilgilerim</a>
+        </li>
+        <li>
+            <a href="@Url.Action("ScoreTableGamer","Gamer")">Genel Skor Tablosu</a>
+        </li>
+        <li>
+            <a href="@Url.Action("GameArena","Gamer")">Yeni Oyun</a>
+        </li>
+    </ul>
+</li>
