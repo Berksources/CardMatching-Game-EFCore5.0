@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccesLayer
 {
@@ -17,6 +18,7 @@ namespace DataAccesLayer
             void Delete(T model);
             void DeleteID(int ID);
             T GetByEmail(string email);
+            Task UpdateAsync(T entity);
         }
         public class Repository<T> : IRepository<T> where T : class
         {
@@ -90,6 +92,13 @@ namespace DataAccesLayer
             {
                 return _dbSet.AsNoTracking().ToList();
             }
+
+            public Task UpdateAsync(T entity)
+            {
+                _dbSet.Update(entity).State = EntityState.Modified;
+                return Task.CompletedTask;
+            }
+
             public KartOyunuDBContext KartOyunuDBContext { get { return _context as KartOyunuDBContext; } }
         }
 

@@ -4,6 +4,8 @@ using EntityLayer.Result;
 using EntityLayer.UserConfig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using WebKartOyunu.Models;
 
 namespace WebKartOyunu.Controllers
@@ -59,6 +61,32 @@ namespace WebKartOyunu.Controllers
                 ScoreTables = allScore
             };
             return View(scoreTableViewModel);
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult GameArena()
+        {
+            var cards = _unitOfWorkCart.RepositoryCart.CartsWithFileRepoByCount();
+            var cardblack = _unitOfWorkCart.RepositoryCart.CartsWithFileRepoBlackCard();
+            var gamerViewModel = new GamerViewModel
+            {
+                Carts= cards,
+                BlackCart= cardblack
+            };
+            return View(gamerViewModel);
+        }
+        public IActionResult PostScore(int objId)
+        {
+            var scoreTable = new ScoreTable();
+            scoreTable.ScoreData = objId;
+            scoreTable.UserID = getCurrentUser();
+            scoreTable.CreatedDate = DateTime.Now;
+            _unitOfWorkScoreTable.RepositoryScoreTable.Create(scoreTable);
+            _unitOfWorkScoreTable.Complete();
+            return RedirectToAction("Index", "Gamer");
         }
     }
 }

@@ -272,7 +272,7 @@ namespace WebKartOyunu.Controllers
 
         #region /*UpdateCart*/
         [HttpPost]
-        public IActionResult UpdateCart(List<IFormFile> files, int fileID, Cart cart)
+        public async System.Threading.Tasks.Task<IActionResult> UpdateCartAsync(List<IFormFile> files, int fileID, Cart cart)
         {
             try
             {
@@ -287,7 +287,7 @@ namespace WebKartOyunu.Controllers
                         var FileResult = File.Result;
                         FileResult.FileID = fileID;
                         FileResult.CartID = cart.CartID;
-                        _unitOfWorkFirstFileRepo.RepositoryFirstFileRepo.Update(FileResult);
+                       await _unitOfWorkFirstFileRepo.RepositoryFirstFileRepo.UpdateAsync(FileResult);
                         int request = HttpContext.Response.StatusCode;
                         if (request == 200)
                         {

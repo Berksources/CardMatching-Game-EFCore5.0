@@ -12,6 +12,8 @@ namespace DataAccessLayer
     public interface IRepositoryCart<T> : IRepository<Cart> 
     {
         public IEnumerable<Cart> CartsWithFileRepo();
+        public List<Cart> CartsWithFileRepoByCount();
+        public List<Cart> CartsWithFileRepoBlackCard();
         public IEnumerable<Cart> CartsWithFileRepoByID(int ID);
     }
     public class RepositoryCart<T> : Repository<Cart>, IRepositoryCart<T>
@@ -21,6 +23,16 @@ namespace DataAccessLayer
         public IEnumerable<Cart> CartsWithFileRepo()
         {
             return KartOyunuDBContext.Carts.Include(x => x.FirstFileRepos).ToList();
+        }
+
+        public List<Cart> CartsWithFileRepoBlackCard()
+        {
+            return KartOyunuDBContext.Carts.Include(x => x.FirstFileRepos).Where(x=>x.CartName=="xx").ToList();
+        }
+
+        public List<Cart> CartsWithFileRepoByCount()
+        {
+            return KartOyunuDBContext.Carts.Include(x => x.FirstFileRepos).Take(5).ToList();
         }
 
         public IEnumerable<Cart> CartsWithFileRepoByID(int ID)

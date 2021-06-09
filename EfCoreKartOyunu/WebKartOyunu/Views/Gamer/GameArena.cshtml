@@ -1,0 +1,394 @@
+﻿@model GamerViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutGamer.cshtml";
+    int x = 0;
+    int y = 0;
+}
+
+<style>
+    body {
+        background: #ccc;
+    }
+
+    .flip {
+        -webkit-perspective: 800;
+        width: 400px;
+        height: 200px;
+        position: relative;
+        margin: 50px auto;
+    }
+
+        .flip .card.flipped {
+            -webkit-transform: rotatex(-180deg);
+        }
+
+        .flip .card {
+            width: 100%;
+            height: 100%;
+            -webkit-transform-style: preserve-3d;
+            -webkit-transition: 0.5s;
+        }
+
+            .flip .card .face {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                -webkit-backface-visibility: hidden;
+                z-index: 2;
+                font-family: Georgia;
+                font-size: 3em;
+                text-align: center;
+                line-height: 200px;
+            }
+
+            .flip .card .front {
+                position: absolute;
+                z-index: 1;
+                background: black;
+                color: white;
+                cursor: pointer;
+            }
+
+            .flip .card .back {
+                -webkit-transform: rotatex(-180deg);
+                background: blue;
+                background: white;
+                color: black;
+                cursor: pointer;
+            }
+</style>
+<div style="background-color:aqua; border:double;">
+    <div style="text-align:center;background-color:aquamarine;">
+        <h4> 2X5 Oyuna Hoşgeldiniz</h4>
+        <div style="background-color:antiquewhite; font:100">
+            <h6> Bir kartı seçtikten sonra diğer kart ile eşleştirmeniz için 5 saniye süre verilmiştir.   </h6>
+        </div>
+        <div style="background-color:cadetblue; font:100">
+            <h6 id="score">12312</h6>
+        </div>
+    </div>
+    <div style="margin:50px;">
+        <div class="container" style="display:flex;">
+            @foreach (var xx in Model.Carts)
+            {
+                x++;
+                @foreach (var file in xx.FirstFileRepos)
+                {
+                    <div class="col" id="panel1" style="width: 100px;">
+                        <div class="flip" id="js-flip-@x">
+                            <div class="card img-fluid" style="width:100px; display:table-cell">
+                                @foreach (var black in Model.BlackCart)
+                                {
+                                    @foreach (var aa in black.FirstFileRepos)
+                                    {
+                                        <div class="face front">
+                                            <img class="card-img-top" src="data:image/png;base64,@Convert.ToBase64String(aa.FileData)" alt="Card image" style="width:100%;">
+                                        </div>
+                                    }
+                                }
+                                <div class="face back">
+                                    <img class="card-img-top" src="data:image/png;base64,@Convert.ToBase64String(file.FileData)" alt="Card image" style="width:100%;">
+                                </div>
+                                <div class="card-img-overlay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <br />
+        <div class="container" style="display:flex;">
+            @foreach (var xx in Model.Carts)
+            {
+                y++;
+                @foreach (var file in xx.FirstFileRepos)
+                {
+                    <div class="col" id="panel2" style="width: 100px;">
+                        <div class="flip" id="jjs-flip-@y">
+                            <div class="card img-fluid" style="width:100px; display:table-cell">
+                                @foreach (var black in Model.BlackCart)
+                                {
+                                    @foreach (var aa in black.FirstFileRepos)
+                                    {
+                                        <div class="face front">
+                                            <img class="card-img-top" src="data:image/png;base64,@Convert.ToBase64String(aa.FileData)" alt="Card image" style="width:100%;">
+                                        </div>
+                                    }
+                                }
+                                <div class="face back">
+                                    <img class="card-img-top" src="data:image/png;base64,@Convert.ToBase64String(file.FileData)" alt="Card image" style="width:100%;">
+                                </div>
+                                <div class="card-img-overlay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+
+
+</div>
+
+<!--    -->
+<!--    -->
+<script>
+    $('#js-flip-1').bind({
+        click: function () {
+            $('#js-flip-1 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(1);
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#js-flip-1 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+<script>
+    $('#jjs-flip-1').bind({
+        click: function () {
+            $('#jjs-flip-1 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(1);
+            setTimeout(checkForMatch, 500)
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#jjs-flip-1 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+
+<!--    -->
+<!--    -->
+<script>
+    $('#js-flip-2').bind({
+        click: function () {
+            $('#js-flip-2 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(2);
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#js-flip-2 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+<script>
+    $('#jjs-flip-2').bind({
+        click: function () {
+            $('#jjs-flip-2 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(2);
+            setTimeout(checkForMatch, 500)
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#jjs-flip-2 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+
+<!--    -->
+<!--    -->
+<script>
+    $('#js-flip-3').bind({
+        click: function () {
+            $('#js-flip-3 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(3);
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#js-flip-3 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+<script>
+    $('#jjs-flip-3').bind({
+        click: function () {
+            $('#jjs-flip-3 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(3);
+            setTimeout(checkForMatch, 500)
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#jjs-flip-3 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+
+<!--    -->
+<!--    -->
+
+<script>
+    $('#js-flip-4').bind({
+        click: function () {
+            $('#js-flip-4 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(4);
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#js-flip-4 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+<script>
+    $('#jjs-flip-4').bind({
+        click: function () {
+            $('#jjs-flip-4 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(4);
+            setTimeout(checkForMatch, 500)
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#jjs-flip-4 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+
+
+<!--    -->
+<!--    -->
+
+<script>
+    $('#js-flip-5').bind({
+        click: function () {
+            $('#js-flip-5 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(5);
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#js-flip-5 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+<script>
+    $('#jjs-flip-5').bind({
+        click: function () {
+            $('#jjs-flip-5 .card').toggleClass('flipped');
+            setTimeout(closeIt, 5000);
+            cardsChosen.push(5);
+            setTimeout(checkForMatch, 500)
+        },
+    });
+</script>
+<script>
+    function closeIt() {
+        if ($('#jjs-flip-5 .card').hasClass('flipped')) {
+            $('.card').removeClass('flipped');
+        }
+    }
+</script>
+
+
+<script>  
+    function scoreFunc(score) {
+        document.getElementById("score").innerHTML = "Skorunuz: "+score.score; 
+    }
+</script>
+<script>
+    
+    var cardsChosen = [];
+    var cardsChosenID = [];
+    if (cardsChosen.length === 2) {
+        setTimeout(checkForMatch, 500)
+    }
+</script>
+
+<script>
+    var score = { score: 0 };
+    function checkForMatch() {        
+        const firstOne = cardsChosen[0];
+        const secondOne = cardsChosen[1];
+        if (firstOne === secondOne) {
+            emptyArray();
+            myFunction1();
+            myFunction2();
+            score.score = score.score + 100;
+            scoreFunc(score);
+            Update();
+            alert('tebrikler.');
+        } else {
+            emptyArray();
+            score.score = score.score - 100;
+            scoreFunc(score)
+            alert('eşleşme olmadı');
+        }
+    }
+</script>
+
+<script>
+    function emptyArray() {
+        cardsChosen.pop();
+        cardsChosen.pop();
+    }
+</script>
+
+<script>
+    function myFunction1() {
+        document.getElementById("panel1").style.display = "none";
+    }
+</script>
+
+<script>
+    function myFunction2() {
+        document.getElementById("panel2").style.display = "none";
+    }
+</script>
+ 
+<script>
+    function Update() {
+        var data = { objId: $('#score').val() };
+        $.ajax({
+            url: '@Url.Action("PostScore","Gamer")',
+            data: data,
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (data) {
+                alert('Skorunuz Kaydedildi');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+</script>
